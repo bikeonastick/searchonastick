@@ -9,3 +9,4 @@ module Searchonastick
     end
   end
 end
+

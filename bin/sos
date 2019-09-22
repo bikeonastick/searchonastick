@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "searchonastick"
+require "rubygems"
+
+Searchonastick::MySearch.four_one_eight
+
