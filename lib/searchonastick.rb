@@ -1,6 +1,11 @@
 require "searchonastick/version"
 
 module Searchonastick
-  class Error < StandardError; end
-  # Your code goes here...
+  class MySearch
+    def self.four_one_eight
+      puts "\t****************\n"
+      puts "\t* I'm a teapot *\n"
+      puts "\t****************\n"
+    end
+  end
 end
