@@ -8,5 +8,6 @@ module Searchonastick
       puts "\t****************\n"
     end
   end
+
 end
 
