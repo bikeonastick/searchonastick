@@ -6,7 +6,7 @@
 - regular expression
 - through index
 
-and benchmark's the results.
+and benchmarks the results.
 
 ## Installation
 
@@ -26,7 +26,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To run specs, simply enter the top of the project directory and type `rake`
 
 ## Development
 
