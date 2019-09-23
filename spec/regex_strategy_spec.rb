@@ -32,9 +32,9 @@ RSpec.describe Searchonastick::RegexStrategy do
     end
     it "finds five matches in results" do
       to_search = @test_files 
-      subject.search(to_search, /\bba[rz]{1}\b/)
+      results = subject.search(to_search, /\bba[rz]{1}\b/)
       match_count = 0
-      subject.results.each{|result| 
+      results.each{|result| 
         match_count += result.count}
       expect(match_count).to eq(5)
     end

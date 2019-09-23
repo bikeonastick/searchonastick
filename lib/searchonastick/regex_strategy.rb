@@ -27,6 +27,7 @@ module Searchonastick
         }
         @results << search_result
       }
+      return @results
     end
   end
 end
