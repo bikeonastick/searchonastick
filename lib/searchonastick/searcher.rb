@@ -33,8 +33,5 @@ module Searchonastick
     def search
       @results = @search_impl.search(@text_files,@search_string)
     end
-
-
   end
-
 end

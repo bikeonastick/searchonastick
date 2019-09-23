@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "searchonastick"
+require "rubygems"
+require 'getoptlong'
+
+opts = GetoptLong.new(
+  [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+  ['--search-term', '-s', GetoptLong::REQUIRED_ARGUMENT ],
+  ['--method', '-m', GetoptLong::REQUIRED_ARGUMENT ]
+)
+
+search_term = ''
+search_method = ''
+
+help_txt = <<-EOF
+bin/searchit [OPTIONS]
+
+-h,--help:
+    show help
+
+-s, --search-term: 
+    The string you want searched in the documents
+
+-m, --method: 
+    enter 1, 2, or 3 
+    where 
+    - 1 is for String Search
+    - 2 is for Regex Search
+    - 3 is for Indexed Search
+EOF
+
+unless (ARGV.size > 0)
+  puts help_txt
+  exit 0
+end
+
+opts.each do |opt, arg|
+  case opt
+    when '--help'
+      puts help_txt
+    when '--search-term'
+      search_term = arg
+    when '--method'
+      search_method = arg.to_i
+  end
+end
+
+puts "s=#{search_term} m=#{search_method}" 
