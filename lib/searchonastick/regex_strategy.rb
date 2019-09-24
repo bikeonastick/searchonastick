@@ -20,7 +20,8 @@ module Searchonastick
       text_files.docs.each{|file_name|
         search_result = Searchonastick::SearchResult.new(file_name)
         IO.foreach(file_name){|line|
-          matches = line.scan(search_string)
+          #TODO: verify that these are what we want...
+          matches = line.scan(/\b#{search_string}\b/)
           if(matches.size > 0)
             search_result.result += matches
           end

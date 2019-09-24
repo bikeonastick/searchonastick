@@ -30,16 +30,16 @@ RSpec.describe Searchonastick::RegexStrategy do
   describe "needs files for test" do
     it "creates a search_result for each file" do
       to_search = @textfiles
-      subject.search(to_search, /\bba[rz]{1}\b/)
+      subject.search(to_search, "bar")
       expect(subject.results.size).to eq(3)
     end
     it "finds five matches in results" do
       to_search = @textfiles 
-      results = subject.search(to_search, /\bba[rz]{1}\b/)
+      results = subject.search(to_search, "bar")
       match_count = 0
       results.each{|result| 
         match_count += result.count}
-      expect(match_count).to eq(5)
+      expect(match_count).to eq(2)
     end
   end
 end
