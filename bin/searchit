@@ -2,6 +2,8 @@
 
 require "bundler/setup"
 require "searchonastick"
+require "searchonastick/textfiles"
+require "searchonastick/searcher"
 require "rubygems"
 require 'getoptlong'
 
@@ -24,11 +26,11 @@ bin/searchit [OPTIONS]
     The string you want searched in the documents
 
 -m, --method: 
-    enter 1, 2, or 3 
+    enter 0, 1, or 2 
     where 
-    - 1 is for String Search
-    - 2 is for Regex Search
-    - 3 is for Indexed Search
+    - 0 is for String Search
+    - 1 is for Regex Search
+    - 2 is for Indexed Search
 EOF
 
 unless (ARGV.size > 0)
@@ -47,4 +49,12 @@ opts.each do |opt, arg|
   end
 end
 
-puts "s=#{search_term} m=#{search_method}" 
+textfiles = Searchonastick::Textfiles.new
+searcher = Searchonastick::Searcher.new(search_method)
+searcher.text_files = textfiles
+searcher.search_string = search_term
+search_results = searcher.search
+puts "s=#{search_term} m=#{search_method} sr_len=#{search_results.size}" 
+
+
+

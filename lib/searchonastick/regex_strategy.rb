@@ -17,7 +17,7 @@ module Searchonastick
     def search(text_files, search_string)
       @text_files = text_files
       @search_string = search_string
-      text_files.each{|file_name|
+      text_files.docs.each{|file_name|
         search_result = Searchonastick::SearchResult.new(file_name)
         IO.foreach(file_name){|line|
           matches = line.scan(search_string)

@@ -1,3 +1,5 @@
+require 'searchonastick/regex_strategy'
+
 module Searchonastick
   
   class Searcher
