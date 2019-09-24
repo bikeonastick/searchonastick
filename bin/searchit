@@ -26,11 +26,11 @@ bin/searchit [OPTIONS]
     The string you want searched in the documents
 
 -m, --method: 
-    enter 0, 1, or 2 
+    enter 1, 2, or 3 
     where 
-    - 0 is for String Search
-    - 1 is for Regex Search
-    - 2 is for Indexed Search
+    - 1 is for String Search
+    - 2 is for Regex Search
+    - 3 is for Indexed Search
 EOF
 
 unless (ARGV.size > 0)
@@ -45,7 +45,8 @@ opts.each do |opt, arg|
     when '--search-term'
       search_term = arg
     when '--method'
-      search_method = arg.to_i
+      # matching numbers in the interface to numbers in the program
+      search_method = (arg.to_i - 1)
   end
 end
 
