@@ -22,7 +22,7 @@ module Searchonastick
     def search_factory
       case @strategy
       when SIMPLE
-        @search_impl = "foo"
+        @search_impl = ScanStrategy.new
       when REGEX
         @search_impl = RegexStrategy.new
       when INDEXED

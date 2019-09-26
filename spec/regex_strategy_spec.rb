@@ -33,7 +33,7 @@ RSpec.describe Searchonastick::RegexStrategy do
       subject.search(to_search, "bar")
       expect(subject.results.size).to eq(3)
     end
-    it "finds five matches in results" do
+    it "finds two matches in results" do
       to_search = @textfiles 
       results = subject.search(to_search, "bar")
       match_count = 0
