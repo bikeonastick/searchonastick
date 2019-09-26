@@ -14,6 +14,11 @@ module Searchonastick
       reset()
     end
 
+    #
+    # Mimicing the characters that are represented by regex \w character class
+    # so I can get the same search results as the regex that uses:
+    # `\b#{search_word}\b`
+    #
     def build_word_chars()
       @word_chars = ['_']
       @word_chars += ('a'..'z').to_a
@@ -27,10 +32,10 @@ module Searchonastick
     end
 
     #
-    # TODO: look at a different model where << does this, but does not return
-    # true/false. the count of words found will be stored in a member variable
-    # and count increments will need the context of previous/next chars to know
-    # whether or not to increment.
+    # The count of words found will be stored in a member variable
+    # and count increments will need the context of previous/next 
+    # chars to know whether or not to increment (or possibly decrement)
+    # the found count.
     #
     def << (char)
       @last_head = @storage.shift
