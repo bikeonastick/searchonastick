@@ -55,7 +55,11 @@ searcher = Searchonastick::Searcher.new(search_method)
 searcher.text_files = textfiles
 searcher.search_string = search_term
 search_results = searcher.search
-puts "s=#{search_term} m=#{search_method} sr_len=#{search_results.size}" 
+full_results_count = 0
+search_results.each{|result|
+  full_results_count += result.result.size
+}
+puts "s=#{search_term} m=#{search_method} sr_len=#{full_results_count}" 
 
 
 

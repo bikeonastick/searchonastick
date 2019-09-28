@@ -1,4 +1,5 @@
 require 'searchonastick/regex_strategy'
+require 'searchonastick/scan_strategy'
 
 module Searchonastick
   

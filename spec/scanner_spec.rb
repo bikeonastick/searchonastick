@@ -4,7 +4,8 @@ require 'searchonastick/scanner'
 
 RSpec.describe Searchonastick::Scanner do
   
-  subject { Searchonastick::Scanner.new(['b','a','r']) }
+  #subject { Searchonastick::Scanner.new('b','a','r']) }
+  subject { Searchonastick::Scanner.new('bar') }
 
   it "found count is 0 when << pushes chars on and current is not equal to scan_target" do
 

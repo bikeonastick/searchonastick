@@ -4,12 +4,13 @@ module Searchonastick
   
   class Scanner
 
-    attr_accessor :to_find, :storage, :found_count
+    attr_accessor :to_find, :storage, :found_count, :found_vals
 
 
     def initialize(scan_target)
-      @to_find = scan_target
+      @to_find = scan_target.chars
       @prev_match = false
+      @found_vals = []
       build_word_chars()
       reset()
     end
@@ -40,12 +41,10 @@ module Searchonastick
     def << (char)
       @last_head = @storage.shift
       @storage.push(char)
-#      puts "last_head=#{@last_head}"
-#      puts "to_find=#{@to_find}"
-#      puts "storage=#{@storage}"
       if(!@word_chars.include?(@last_head))
         if (@storage == @to_find)
           @found_count += 1
+          @found_vals << (@storage.join)
           @prev_match = true
         end
       else
@@ -55,6 +54,7 @@ module Searchonastick
         #for whole words only
         if(@prev_match && @word_chars.include?(char))
           @found_count -= 1
+          @found_vals.pop
           @prev_match = false
         elsif(@prev_match)
           @prev_match = false
