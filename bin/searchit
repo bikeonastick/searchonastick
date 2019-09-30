@@ -61,13 +61,12 @@ opts.each do |opt, arg|
     when '--reuse-index'
       reuse_index = true
     when '--keep-index'
-      reuse_index = true
+      keep_index = true
   end
 end
 
 textfiles = Searchonastick::Textfiles.new
-searcher = Searchonastick::Searcher.new(search_method, textfiles)
-searcher.search_string = search_term
+searcher = Searchonastick::Searcher.new(search_method, textfiles, search_term, keep_index, reuse_index)
 search_results = searcher.search
 full_results_count = 0
 search_results.each{|result|
