@@ -67,12 +67,36 @@ end
 
 textfiles = Searchonastick::Textfiles.new
 searcher = Searchonastick::Searcher.new(search_method, textfiles, search_term, keep_index, reuse_index)
+
 search_results = searcher.search
+
 full_results_count = 0
+results_map = {}
 search_results.each{|result|
-  full_results_count += result.result.size
+  full_results_count += result.count
+  results_map[result.name] = result.count
 }
-puts "s=#{search_term} m=#{search_method} sr_len=#{full_results_count}" 
+
+# sort the hash by count values, descending
+sorted_results = results_map.sort_by{|k,v| -v}.to_h
+
+puts "\nSearch Results:\n\n"
+sorted_results.each_pair{|k,v|
+  puts "\t#{k} - #{v} matches\n\n"
+
+}
+
+indexing_time = searcher.index_benchmark
+searching_time = searcher.search_benchmark
+
+puts "Timing:\n\n"
+if (search_method == 2)
+  puts "\tTime to index - #{indexing_time.total * 1000}ms"
+end
+
+puts "\tTime to search - #{searching_time.total * 1000}ms"
+
+
 
 
 
