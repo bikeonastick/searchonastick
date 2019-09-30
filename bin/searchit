@@ -8,13 +8,18 @@ require "rubygems"
 require 'getoptlong'
 
 opts = GetoptLong.new(
-  [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
-  ['--search-term', '-s', GetoptLong::REQUIRED_ARGUMENT ],
-  ['--method', '-m', GetoptLong::REQUIRED_ARGUMENT ]
+  ['--help', '-h', GetoptLong::NO_ARGUMENT],
+  ['--search-term', '-s', GetoptLong::REQUIRED_ARGUMENT],
+  ['--method', '-m', GetoptLong::REQUIRED_ARGUMENT],
+  ['--keep-index', '-k', GetoptLong::NO_ARGUMENT],
+  ['--reuse-index', '-r', GetoptLong::NO_ARGUMENT]
 )
 
 search_term = ''
 search_method = ''
+reuse_index = false
+keep_index = false
+
 
 help_txt = <<-EOF
 bin/searchit [OPTIONS]
@@ -22,15 +27,21 @@ bin/searchit [OPTIONS]
 -h,--help:
     show help
 
--s, --search-term: 
-    The string you want searched in the documents
+-k,--keep-index:
+    meant for use with Indexed search. keeps index files on disk.
 
--m, --method: 
+-m, --method [1|2|3]: 
     enter 1, 2, or 3 
     where 
     - 1 is for String Search
     - 2 is for Regex Search
     - 3 is for Indexed Search
+
+-r,--reuse-index:
+    meant for use with Indexed search. skips indexing and reuses existing index files.
+
+-s, --search-term <argument>: 
+    The string you want searched in the documents
 EOF
 
 unless (ARGV.size > 0)
@@ -47,12 +58,15 @@ opts.each do |opt, arg|
     when '--method'
       # matching numbers in the interface to numbers in the program
       search_method = (arg.to_i - 1)
+    when '--reuse-index'
+      reuse_index = true
+    when '--keep-index'
+      reuse_index = true
   end
 end
 
 textfiles = Searchonastick::Textfiles.new
-searcher = Searchonastick::Searcher.new(search_method)
-searcher.text_files = textfiles
+searcher = Searchonastick::Searcher.new(search_method, textfiles)
 searcher.search_string = search_term
 search_results = searcher.search
 full_results_count = 0

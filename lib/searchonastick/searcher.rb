@@ -1,5 +1,6 @@
 require 'searchonastick/regex_strategy'
 require 'searchonastick/scan_strategy'
+require 'searchonastick/index_strategy'
 
 module Searchonastick
   
@@ -15,8 +16,9 @@ module Searchonastick
     @text_files
     @results
 
-    def initialize(strategy=SIMPLE)
+    def initialize(strategy=SIMPLE,text_files=[])
       @strategy = strategy
+      @text_files = text_files
       @search_impl = search_factory
     end
 
@@ -27,7 +29,9 @@ module Searchonastick
       when REGEX
         @search_impl = RegexStrategy.new
       when INDEXED
-        @search_impl = "bar"
+        @search_impl = IndexStrategy.new
+        @search_impl.index(@text_files)
+        @search_impl
       else
         "error"
       end
