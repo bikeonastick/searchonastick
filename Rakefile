@@ -12,6 +12,7 @@ task :benchmark, [:x] do |t,rargs|
 
 
   repetition = (rargs.x.to_i > 0)? rargs.x.to_i : 1
+  #pluralize message
   s = (repetition > 1) ? 's' : ''
   puts "benchmarking... looping #{repetition} time#{s}"
 
@@ -48,33 +49,33 @@ task :benchmark, [:x] do |t,rargs|
   ]
 
   repetition.times do
-  search_args.each{|args|
+    search_args.each{|args|
 
-    search_term = search_words[rand(0..12)]
+      search_term = search_words[rand(0..12)]
 
-    searcher = Searchonastick::Searcher.new(
-      args[0], textfiles, search_term, args[1], args[2])
+      searcher = Searchonastick::Searcher.new(
+        args[0], textfiles, search_term, args[1], args[2])
 
-    search_results = searcher.search
+      search_results = searcher.search
 
-    full_results_count = 0
-    results_map = {}
-    search_results.each{|result|
-      full_results_count += result.count
-      results_map[result.name] = result.count
+      full_results_count = 0
+      results_map = {}
+      search_results.each{|result|
+        full_results_count += result.count
+        results_map[result.name] = result.count
+      }
+
+      sorted_results = results_map.sort_by{|k,v| -v}.to_h
+
+      index_bm = (args[0] == 2)? (searcher.index_benchmark.total * 1000) : 'N/A'
+
+      bench_file << [args[0], search_term,
+                     (searcher.search_benchmark.total * 1000), index_bm, 
+                     sorted_results.keys[0], sorted_results.values[0], 
+                     sorted_results.keys[1], sorted_results.values[1], 
+                     sorted_results.keys[2], sorted_results.values[2] 
+      ]
     }
-
-    sorted_results = results_map.sort_by{|k,v| -v}.to_h
-
-    index_bm = (args[0] == 2)? (searcher.index_benchmark.total * 1000) : 'N/A'
-
-    bench_file << [args[0], search_term,
-                   (searcher.search_benchmark.total * 1000), index_bm, 
-                   sorted_results.keys[0], sorted_results.values[0], 
-                   sorted_results.keys[1], sorted_results.values[1], 
-                   sorted_results.keys[2], sorted_results.values[2] 
-    ]
-  }
   end
 
   bench_file.close()
