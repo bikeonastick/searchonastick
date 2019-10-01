@@ -10,6 +10,27 @@ and benchmarks the results.
 
 ## Installation
 
+### Docker
+
+Sure, this is a ruby gem, but if ruby is not your primary stack and you're not
+used to dealing with the arcane minutae that is installing and managing ruby
+dependencies, don't worry. We have a docker command for you.
+
+    $ docker build -t searchonastick .
+
+Test your install:
+
+    $ docker run --rm -v "$PWD":/usr/searchonastick -w /usr/searchonastick ruby:2.5 bundle install && rake
+
+You should see output similar to the following:
+
+    Finished in 0.01867 seconds (files took 0.19642 seconds to load)
+    26 examples, 0 failures
+
+This runs the `rspec` tests for the codebase.
+
+### Local
+
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -26,7 +47,21 @@ Or install it yourself as:
 
 ## Usage
 
-To run specs, simply enter the top of the project directory and type `rake`
+Docker and local usage are slightly different. 
+
+### Docker
+
+To run a `teapot` script:
+
+    $ docker run --rm -v "$PWD":/usr/searchonastick -w /usr/searchonastick ruby:2.5 bundle install && sos
+
+Which will output `I'm a teapot` to the screen.
+
+For help
+
+
+
+### Local 
 
 ## Development
 

@@ -7,7 +7,7 @@
 /pkg/
 /spec/reports/
 /tmp/
-
+searchonastick-*.gem
 .DS_Store
 
 # rspec failure tracking
