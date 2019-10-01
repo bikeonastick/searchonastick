@@ -1,10 +1,10 @@
 # Searchonastick
 
-`searconastick` searches text files via:
+`searchonastick` searches text files via:
 
 - string match
 - regular expression
-- through index
+- indexed
 
 and benchmarks the results. It looks for files in the `textfiles` directory
 under the project directory. 
@@ -24,7 +24,7 @@ LICENSE.txt            # MIT license
 README.md              # this file (how meta)
 Rakefile               # like a Makefile, but ruby
 benchmark              # empty directory for benchmark to write CSV file
-bin                    # contains top level script
+bin                    # contains top level scripts
 img                    # images in case README.md needs illustrations
 index_files            # empty directory to keep index files if you use -k
 lib                    # FIND BUSINESS LOGIC HERE
@@ -122,11 +122,12 @@ Timing:
 
 The `-k` flag marshals the index into a flat file and saves it for the next run,
 which will greatly reduce the time to index output, when you replace the `-k` flag
-with a `-r` flag:
+with an `-r` flag:
 
     $ docker run --rm -v "$PWD":/usr/searchonastick -w /usr/searchonastick ruby:2.5 bundle install && bin/searchit -m 3 -r -s to
 
-which will generate slightly different search and index numbers:
+This will generate slightly different search and index numbers (also because I
+searched for a different word):
 
 ```
 Search Results:
@@ -153,7 +154,7 @@ an arrangement of 50 somewhat randomized searches each using a random search
 word from an array of 13 words, some of which will be found in the spec text
 files and some of which will not be found. 
 
-**NOTE:** the benchmark looks for its text files to search in the `textfiles`
+**NOTE:** the benchmark looks for text files to search in the `textfiles`
 directory.
 
 ```
@@ -174,7 +175,17 @@ benchmarking... looping 5 times
 
 Not much output, but you can read the benchmark results in
 `benchmark/search_compare.csv`. The logic for the benchmark is in the `Rakefile` 
-in a task named `benchmark`. 
+in a task named `benchmark`. Here are some sample charts generated from
+benchmark runs.
+
+The green bars represent index file load times, the first one per benchmark 
+was is on the far left in both charts and this takes the longest because it has
+to generate the index. There are no green bars for the scan and regex
+strategies. 
+
+![benchmark run locally](img/benchmark_local.png)
+
+![benchmark run on docker](img/benchmark_docker.png)
 
 ### Local 
 
