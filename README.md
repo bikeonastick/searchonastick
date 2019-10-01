@@ -187,6 +187,67 @@ strategies.
 
 ![benchmark run on docker](img/benchmark_docker.png)
 
+### original files
+```
+-rw-r--r--@ 1 roberttomb  staff  4078 Sep 21 21:39 french_armed_forces.txt
+-rw-r--r--@ 1 roberttomb  staff  1874 Sep 21 21:39 hitchhikers.txt
+-rw-r--r--@ 1 roberttomb  staff  1054 Sep 21 21:39 warp_drive.txt
+```
+
+After growing the files exponentially by `cat`ing and `tee`ing them into
+themselves in loops, they reached hundreds of megs:
+
+```
+-rw-r--r--  1 roberttomb  staff   510M Oct  1 09:12 french_armed_forces.txt
+-rw-r--r--  1 roberttomb  staff   469M Oct  1 09:13 hitchhikers.txt
+-rw-r--r--  1 roberttomb  staff   280M Oct  1 09:14 warp_drive.txt
+```
+
+I ran the following command:
+
+```
+docker run --rm -v "$PWD":/usr/searchonastick -w /usr/searchonastick ruby:2.5 bundle install && bin/searchit -m 2 -s "Hitchhiker's"
+```
+
+And the process did not finish. Reducing the files a bit:
+
+```
+-rw-r--r--  1 roberttomb  staff    16M Oct  1 09:47 french_armed_forces.txt
+-rw-r--r--  1 roberttomb  staff    29M Oct  1 09:48 hitchhikers.txt
+-rw-r--r--  1 roberttomb  staff    16M Oct  1 09:49 warp_drive.txt
+```
+
+same command
+
+```
+ docker run --rm -v "$PWD":/usr/searchonastick -w /usr/searchonastick ruby:2.5 bundle install && bin/searchit -m 2 -s "Hitchhiker's"
+```
+
+Still able to work through them.
+
+```
+Search Results:
+
+        textfiles/hitchhikers.txt - 98304 matches
+
+        textfiles/warp_drive.txt - 0 matches
+
+        textfiles/french_armed_forces.txt - 0 matches
+
+Timing:
+
+        Time to search - 8801.271999999999ms
+
+```
+
+After running the benchmark (looping only once) on these larger files, I see an
+interesting trend.
+
+![benchmark run on docker](img/docker_large_text_files.png)
+
+The simple word scan tended to be slower on smaller files, but it tends to win
+out with larger files. 
+
 ### Local 
 
 Coming soon
