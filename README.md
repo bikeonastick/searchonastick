@@ -191,6 +191,21 @@ strategies.
 
 Coming soon
 
+## TODO
+
+Improvements or known bugs
+
+- Improve punctuation awareness. Searching for "Hitchhiker's" finds 5 of 6
+  occurrences in hitchhikers.txt because one is enclosed in quotation marks in
+  the text for the `indexed` search. However, the `regex` search and the `scan`
+  search find all 6.
+- Refactor the strategies and the results to lose the actual match values. These
+  are unnecessary after you are confident in what you are capturing. Especially,
+  because the original spec just wanted to see counts. 
+- There are probably more efficient indexing strategies that could be tried,
+  which would reduce the weight of the index and allow it to scale to extremely
+  large file sizes.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
